@@ -1,31 +1,99 @@
 package main
 
 import "fmt"
+import "sort"
+
 //Program for recursively computing the 10 smallest ints with 
 //	the longest Collatz sequences less than 5 billion
 
-func collatz(i uint32) uint32 {
-	//Function for recursively computing length of Collatz sequence of input val
-	//If val is even, divides by 2
-	//If val is odd, multiplies by 3 and adds 1
-	//Finally, val will equal 1 and function returns length of sequence
+//Precondition: integer value is passed in from main function
+//Postcondition: Returns length of Collatz sequence of input value
+func collatz(i uint64) int {
 
-	var count uint32 = 1
+	//Variable for storing length of Collatz sequence
+	var count int = 1
+
+	//Recursively calls Collatz function until input value reaches 1
 	if (i == 1) {
 		count = 0
+
+	//If input value is not 1, performs Collatz formula and recursively calls function
 	} else if (i % 2 == 0) {
 		i = i / 2
 		count = count + collatz(i)
-	} else { 
-		i = i * 3 + 1
+	} else {
+		i = (i * 3) + 1
 		count = count + collatz(i)
 	}
-		
-	return count
+
+	return count	
 }
 
 func main() {
-	//Testing recursive Collatz function
-	var i uint32 = 77031
-	fmt.Println(collatz(i))
+	//Arrays for storing Collatz sequence lengths and corresponding initial values, initialized to 0
+	var lengths = []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	var vals = []uint64{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+	//Variable for storing the Collatz sequence length of each value in range
+	var length int = 0
+
+	//Loop for computing the Collatz sequence for every value b/w 1 and 5 billion and building array
+	//	of smallest values with longest Collatz sequences
+	//Postcondition: Each array will hold 10 longest unique Collatz sequences and corresponding starting values
+	for i := uint64(1); i <= 5000000000; i++ {
+
+		//Storing Collatz sequence length for current value
+		length = collatz(i)
+		
+		//Loop for checking if current Collatz length fits into array
+		for j := 0; j < 10; j++ {
+
+			//Adding Collatz length and corresponding starting value to each array if length
+			//	is greater than any length in array and breaking loop
+			if length > lengths[j] {
+				lengths[j] = length
+				vals[j] = i
+				break;
+
+			//If lengths are equal, adds current length if starting value is smaller, and breaks loop
+			} else if length == lengths[j] {
+				if i < vals[j] {
+					lengths[j] = length
+					vals[j] = i
+				}
+				break;
+			}
+		}
+	}
+	
+	//Arrays for storing sorted lengths and initial values 
+	var tempVals = []uint64{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+	var tempLengths = []int{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+	//Filling temp arrays with corresponding values from original arrays
+	for i := 0; i < 10; i++ {
+		tempVals[i] = vals[i]
+		tempLengths[i] = lengths[i]
+	}
+	
+	//Sorting tempLengths array and printing lengths in sorted order
+	sort.Ints(tempLengths)
+	fmt.Println("Collatz sequence lengths in ascending order: ")
+	for i := 0; i < 10; i++ {
+		fmt.Println(tempLengths[i])
+	}
+
+	//Sorting tempVals array and printing lengths in order of sorted vals
+	sort.Slice(tempVals, func(i, j int) bool {return tempVals[i] < tempVals[j]})
+	fmt.Println("Collatz sequence lengths in order of intial values: ")
+
+	//Loop for finding index of length corresponding to sorted initial values
+	//Compares sorted values to unsorted array, and prints length of index where they are equal
+	for i := 0; i < 10; i++ {
+		for j := 0; j < 10; j++ {
+			if vals[j] == tempVals[i] {
+				fmt.Println(lengths[j])
+			}
+		}
+	}
 }
