@@ -37,10 +37,15 @@ func main() {
 	//Variable for storing the Collatz sequence length of each value in range
 	var length int = 0
 
-	//Loop for computing the Collatz sequence for every value b/w 1 and 5 billion and building array
+	//Getting user input for upper bound
+	var upper uint64
+	fmt.Print("Enter upper bound: ")
+	fmt.Scan(&upper)
+
+	//Loop for computing the Collatz sequence for every value b/w 1 and user input upper bound and building array
 	//	of smallest values with longest Collatz sequences
 	//Postcondition: Each array will hold 10 longest unique Collatz sequences and corresponding starting values
-	for i := uint64(1); i <= 5000000000; i++ {
+	for i := uint64(1); i <= upper; i++ {
 
 		//Storing Collatz sequence length for current value
 		length = collatz(i)
@@ -80,7 +85,11 @@ func main() {
 	sort.Ints(tempLengths)
 	fmt.Println("Collatz sequence lengths in ascending order: ")
 	for i := 0; i < 10; i++ {
-		fmt.Println(tempLengths[i])
+		for j := 0; j < 10; j++ {
+			if lengths[j] == tempLengths[i] {
+				fmt.Println(vals[j], "\t", lengths[j])
+			}
+		}
 	}
 
 	//Sorting tempVals array and printing lengths in order of sorted vals
@@ -92,7 +101,7 @@ func main() {
 	for i := 0; i < 10; i++ {
 		for j := 0; j < 10; j++ {
 			if vals[j] == tempVals[i] {
-				fmt.Println(lengths[j])
+				fmt.Println(vals[j], "\t", lengths[j])
 			}
 		}
 	}
