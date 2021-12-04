@@ -60,10 +60,11 @@
         !Lengths array stores values in descending order, so loop
         ! through in reverse order prints out values in ascending order
         print *, "Collatz sequence lengths in ascending order: "
+        print *, "Intial value     Sequence length"
         do i = 10, 1, -1
                 do j = 1, 10
                         if (lengths(j) == tempLengths(i)) then
-              write(*, fmt = "(i0, a)", advance = "no") vals(j), "     "
+      write(*, fmt = "(i0, a)", advance = "no") vals(j), "     "
               write(*, fmt = "(i0)", advance = "yes") lengths(j)
                         endif
                 end do
@@ -75,6 +76,7 @@
         !Printing lengths and corresponding initial values in order of
         ! initial value size
         print *, "Collatz sequence lengths in order of initial value: "
+        print *, "Initial value     Sequence length"
         do i = 1, 10
                 do j = 1, 10
                         if (vals(j) == tempVals(i)) then
