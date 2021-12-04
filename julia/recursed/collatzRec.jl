@@ -85,20 +85,22 @@ function main()
 
 	#Printing lengths in ascending order
 	println("Collatz sequence lengths in ascending order: ")
+	println("Initial value\tSequence length")
 	for i in 1:10
 		for j in 1:10
 			if (lengths[j] == tempLengths[i])
-				println(vals[j], "\t", lengths[j])
+				println("  ", vals[j], "\t\t", lengths[j])
 			end
 		end
 	end
 
 	#Printing lengths in ascending order based on initial values
 	println("Collatz sequence lengths in order of initial values: ")
+	println("Initial value\tSequence length")
 	for i in 1:10
 		for j in 1:10
 			if (vals[j] == tempVals[i])
-				println(vals[j], "\t", lengths[j])
+				println("  ", vals[j], "\t\t", lengths[j])
 			end
 		end
 	end
