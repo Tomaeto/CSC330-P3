@@ -84,10 +84,11 @@ func main() {
 	//Sorting tempLengths array and printing lengths in sorted order
 	sort.Ints(tempLengths)
 	fmt.Println("Collatz sequence lengths in ascending order: ")
+	fmt.Println("Intial value\tSequence length")
 	for i := 0; i < 10; i++ {
 		for j := 0; j < 10; j++ {
 			if lengths[j] == tempLengths[i] {
-				fmt.Println(vals[j], "\t", lengths[j])
+				fmt.Println("  ", vals[j], "\t\t", lengths[j])
 			}
 		}
 	}
@@ -95,13 +96,13 @@ func main() {
 	//Sorting tempVals array and printing lengths in order of sorted vals
 	sort.Slice(tempVals, func(i, j int) bool {return tempVals[i] < tempVals[j]})
 	fmt.Println("Collatz sequence lengths in order of intial values: ")
-
+	fmt.Println("Intial value\tSequence length")
 	//Loop for finding index of length corresponding to sorted initial values
 	//Compares sorted values to unsorted array, and prints length of index where they are equal
 	for i := 0; i < 10; i++ {
 		for j := 0; j < 10; j++ {
 			if vals[j] == tempVals[i] {
-				fmt.Println(vals[j], "\t", lengths[j])
+				fmt.Println("  ", vals[j], "\t\t", lengths[j])
 			}
 		}
 	}
